@@ -28,20 +28,16 @@ namespace YtDownloadTest
             _progressBarVideo = progressBarAudio;
         }
 
-        public override void Download(string url, string fileDirUrl, string newFileName)
+        public async override void Download(string url, string fileDirUrl, string newFileName)
         {
-
-
-            var youTube = YouTube.Default; // starting point for YouTube actions
-
-            var video = youTube.GetVideo(url); // gets a Video object with info about the video
-            var userN = Environment.UserName;
+            var youTube = YouTube.Default;
+            var video = await youTube.GetVideoAsync(url);
             var videoPath = $"{fileDirUrl}\\" + $"{newFileName}" + ".mp4";
-            File.WriteAllBytes($"{videoPath}", video.GetBytes());
-            //MessageBox.Show("Download done!");
-            //ConvertVideoToAudio(videoPath);
-            MessageBox.Show("Convertion done!");
-            
+            using (FileStream fs = new FileStream(videoPath, FileMode.OpenOrCreate)) 
+            {
+                await fs.WriteAsync(video.GetBytes(), 0, video.GetBytes().Length);
+            }
+
         }
         public override void Convert(string path) 
         {

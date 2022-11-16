@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YtDownloadA.Utils;
 using YtDownloadTest;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -24,10 +25,10 @@ namespace YtDownloadA
         private void button1_Click(object sender, EventArgs e)
         {
             _ytVideoDownloader = new YtDownloadVideo();
+            saveFileDialog1.FileName = TimeUtils.CurrentTime;
             if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
             {
                 return;
-
             }
 
             string filename = saveFileDialog1.FileName;
@@ -73,6 +74,11 @@ namespace YtDownloadA
             var fileNewName = Path.GetFileName(filename);
             string fileDir = Path.GetDirectoryName(filename);
             _ytVideoDownloader.Convert(filename);
+
+        }
+
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
 
         }
     }
