@@ -22,7 +22,7 @@ namespace YtDownloadA
         {
             InitializeComponent();
 }
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             _ytVideoDownloader = new YtDownloadVideo();
             saveFileDialog1.FileName = TimeUtils.CurrentTime;
@@ -34,7 +34,8 @@ namespace YtDownloadA
             string filename = saveFileDialog1.FileName;
             var fileNewName = Path.GetFileName(filename);
             string fileDir = Path.GetDirectoryName(filename);
-            _ytVideoDownloader.Download(textBox1.Text, fileDir, fileNewName);
+            await Task.Run(() =>
+            _ytVideoDownloader.Download(textBox1.Text, fileDir, fileNewName));
             if (checkBox1.Checked)
             {
                 _ytVideoDownloader.Convert($"{fileDir}\\" + $"{fileNewName}" + ".mp4");

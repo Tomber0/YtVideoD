@@ -8,7 +8,7 @@ namespace YtDownloadA.Utils
         {
             get
             {
-                return $"{DateTime.Now.Date}{DateTime.Now.Minute}";
+                return $"{DateTime.Now.Ticks}";
             }
         }
     }
